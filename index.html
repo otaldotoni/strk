@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>STRK</title>
+<meta name="theme-color" content="#14213d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="STRK">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f7;--card:#fff;--tx:#14213d;--mu:#667085;--bd:#dde2ee;--gold:#f5b700;--ok:#1fa971;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1626;--card:#17233a;--tx:#eef1f7;--mu:#93a0b8;--bd:#263553;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Nunito,system-ui,sans-serif;background:var(--bg);color:var(--tx);padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+main{max-width:560px;margin:0 auto;padding:16px 14px 90px}
+h1{font-size:28px;font-weight:900;margin:6px 0 2px;letter-spacing:-.5px}
+.sub{color:var(--mu);font-weight:700;margin:0 0 14px}
+.bar{height:10px;background:var(--bd);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:9px;transition:width .3s}
+.card{background:var(--card);border:2px solid var(--bd);border-radius:18px;padding:14px;margin:12px 0;border-bottom-width:5px}
+.row{display:flex;align-items:center;gap:10px}
+.emo{font-size:28px;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none}
+.grow{flex:1;min-width:0}
+.name{font-weight:900;font-size:18px;overflow-wrap:anywhere}
+.desc{color:var(--mu);font-size:14px;font-weight:600}
+.fire{font-weight:900;font-size:20px;white-space:nowrap}
+button{font:inherit;font-weight:900;cursor:pointer;border:0;border-radius:14px;padding:12px 16px;color:#fff;background:var(--tx)}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.big{width:100%;margin-top:12px;font-size:17px;border-bottom:4px solid rgba(0,0,0,.25)}
+.big.done{background:transparent!important;color:var(--ok);border:2px solid var(--ok)}
+.ghost{background:transparent;color:var(--mu);padding:8px 10px;font-size:20px}
+.dots{display:flex;justify-content:space-between;margin-top:12px}
+.dot{background:none;padding:0;color:var(--mu);font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:700}
+.dot b{width:30px;height:30px;border-radius:50%;border:2px solid var(--bd);display:grid;place-items:center;font-size:14px;color:#fff}
+.dot.on b{border-color:transparent}
+.dot.today span{color:var(--tx);font-weight:900}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:2px solid var(--bd);display:flex;justify-content:center;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0))}
+nav button{flex:1;max-width:200px;background:transparent;color:var(--mu)}
+nav button.on{background:var(--bg);color:var(--tx)}
+.add{width:100%;background:transparent;color:var(--mu);border:2px dashed var(--bd);margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chip{font-size:13px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--bg)}
+.gold{background:var(--gold)!important;color:#2a2000!important}
+.empty{text-align:center;color:var(--mu);font-weight:700;padding:30px 10px}
+dialog{border:2px solid var(--bd);border-radius:20px;background:var(--card);color:var(--tx);width:min(92vw,460px);padding:18px;font-family:inherit}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+label{display:block;font-weight:900;margin:12px 0 4px;font-size:14px}
+input[type=text],input[type=number],textarea{width:100%;font:inherit;font-weight:600;padding:10px 12px;border-radius:12px;border:2px solid var(--bd);background:var(--bg);color:var(--tx)}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.sw{width:32px;height:32px;border-radius:50%;padding:0;border:3px solid transparent}
+.sw.sel{border-color:var(--tx)}
+.pre{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.pre button{background:var(--bg);color:var(--tx);padding:6px 12px;font-size:14px}
+.chk{display:flex;gap:10px;align-items:center;font-weight:700;margin:6px 0}
+.chk input{width:20px;height:20px}
+.acts{display:flex;gap:8px;margin-top:18px}
+.acts .del{background:transparent;color:#e5484d;border:2px solid #e5484d}
+.acts .cancel{background:var(--bg);color:var(--tx)}
+.acts .save{flex:1;background:var(--ok)}
+.tools{display:flex;gap:8px;margin-top:20px}
+.tools button{flex:1;background:var(--card);color:var(--mu);border:2px solid var(--bd);font-size:14px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<nav>
+  <button id="t-hoje" data-act="tab" data-v="hoje">🔥 Hoje</button>
+  <button id="t-rec" data-act="tab" data-v="rec">🎁 Recompensas</button>
+</nav>
+<dialog id="dlg"></dialog>
+<input type="file" id="file" accept="application/json" hidden>
+
+<script>
+const KEY='ofensiva.v1';
+const COLORS=['#ff7a1a','#e5484d','#d6409f','#7c5cff','#2f80ed','#12a594','#30a46c','#8b8d98'];
+let S=load(), tab='hoje';
+
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.goals&&d.rewards)return d}catch(e){}return{goals:[],rewards:[]}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){alert('Não consegui salvar no navegador. Exporte um backup.')}}
+const uid=()=>Math.random().toString(36).slice(2,10);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const z=n=>String(n).padStart(2,'0');
+const key=d=>d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate());
+const back=n=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-n);return d};
+const has=(g,k)=>!!g.days[k];
+const goal=id=>S.goals.find(g=>g.id===id);
+
+function streak(g){let i=has(g,key(back(0)))?0:1,n=0;while(has(g,key(back(i)))){n++;i++}return n}
+function best(g){const ks=Object.keys(g.days).sort();let b=0,c=0,prev=null;for(const k of ks){const d=new Date(k+'T12:00:00');c=prev&&Math.round((d-prev)/864e5)===1?c+1:1;b=Math.max(b,c);prev=d}return b}
+function run(r){
+  const gs=r.goalIds.map(goal).filter(Boolean);if(!gs.length)return 0;
+  const last=r.claims.length?r.claims[r.claims.length-1]:'';
+  const all=k=>gs.every(g=>has(g,k));
+  let i=all(key(back(0)))?0:1,n=0;
+  while(i<4000){const k=key(back(i));if(!all(k)||k<=last)break;n++;i++}
+  return n;
+}
+const tint=c=>c+'26';
+
+function render(){
+  document.getElementById('t-hoje').className=tab==='hoje'?'on':'';
+  document.getElementById('t-rec').className=tab==='rec'?'on':'';
+  document.getElementById('app').innerHTML=tab==='hoje'?viewHoje():viewRec();
+}
+
+function viewHoje(){
+  const tk=key(back(0)),total=S.goals.length,done=S.goals.filter(g=>has(g,tk)).length;
+  const dias=['D','S','T','Q','Q','S','S'];
+  let h=`<h1>STRK</h1><p class="sub">${total?(done===total?'Tudo feito hoje. Mandou bem! 🎉':`${done} de ${total} objetivos hoje`):'Crie seu primeiro objetivo'}</p>`;
+  if(total)h+=`<div class="bar"><i style="width:${done/total*100}%"></i></div>`;
+  for(const g of S.goals){
+    const on=has(g,tk),s=streak(g);
+    h+=`<section class="card"><div class="row">
+      <div class="emo" style="background:${tint(g.color)}">${esc(g.emoji)}</div>
+      <div class="grow"><div class="name">${esc(g.name)}</div>${g.desc?`<div class="desc">${esc(g.desc)}</div>`:''}</div>
+      <div class="fire" title="Melhor: ${best(g)} dias">🔥 ${s}</div>
+      <button class="ghost" data-act="editGoal" data-id="${g.id}" aria-label="Editar ${esc(g.name)}">⋯</button></div>
+      <div class="dots">${[6,5,4,3,2,1,0].map(n=>{const d=back(n),k=key(d),o=has(g,k);
+        return `<button class="dot ${o?'on':''} ${n===0?'today':''}" data-act="tog" data-id="${g.id}" data-k="${k}" aria-label="${k}"><b style="${o?'background:'+g.color:''}">${o?'✓':''}</b><span>${dias[d.getDay()]}</span></button>`}).join('')}</div>
+      <button class="big ${on?'done':''}" style="${on?'':'background:'+g.color}" data-act="tog" data-id="${g.id}" data-k="${tk}">${on?'✓ Feito hoje':'Marcar hoje'}</button>
+    </section>`;
+  }
+  if(!total)h+=`<div class="empty">Nada por aqui ainda.<br>Toque abaixo pra começar.</div>`;
+  h+=`<button class="add" data-act="newGoal">+ Novo objetivo</button>
+  <div class="tools"><button data-act="export">Exportar backup</button><button data-act="import">Importar backup</button></div>`;
+  return h;
+}
+
+function viewRec(){
+  let h=`<h1>Recompensas</h1><p class="sub">Só libera com ofensiva perfeita de todos os objetivos ligados.</p>`;
+  for(const r of S.rewards){
+    const n=run(r),ok=n>=r.days&&r.goalIds.some(goal),pct=Math.min(100,n/r.days*100);
+    const chips=r.goalIds.map(goal).filter(Boolean).map(g=>`<span class="chip">${esc(g.emoji)} ${esc(g.name)}</span>`).join('')||'<span class="chip">Nenhum objetivo ligado</span>';
+    h+=`<section class="card"><div class="row">
+      <div class="emo" style="background:#f5b70033">${esc(r.emoji)}</div>
+      <div class="grow"><div class="name">${esc(r.name)}</div><div class="desc">${r.days} dias perfeitos · resgatada ${r.claims.length}x</div></div>
+      <button class="ghost" data-act="editRew" data-id="${r.id}" aria-label="Editar ${esc(r.name)}">⋯</button></div>
+      <div class="chips">${chips}</div>
+      <div class="bar" style="margin-top:12px"><i style="width:${pct}%;background:var(--gold)"></i></div>
+      <div class="desc" style="margin-top:6px">${Math.min(n,r.days)} / ${r.days} dias seguidos</div>
+      <button class="big ${ok?'gold':''}" ${ok?'':'disabled style="opacity:.4;background:var(--mu)"'} data-act="claim" data-id="${r.id}">${ok?'🎉 Resgatar agora':'Ainda não'}</button>
+    </section>`;
+  }
+  if(!S.rewards.length)h+=`<div class="empty">Nenhuma recompensa ainda.<br>Ex.: "Jantar fora" por 30 dias perfeitos.</div>`;
+  h+=`<button class="add" data-act="newRew">+ Nova recompensa</button>`;
+  return h;
+}
+
+/* ---------- formulários ---------- */
+const dlg=document.getElementById('dlg');
+function goalForm(g){
+  const n=!g,c=g?.color||COLORS[0];
+  dlg.innerHTML=`<h2 style="margin:0">${n?'Novo objetivo':'Editar objetivo'}</h2>
+  <label for="f-name">Nome</label><input type="text" id="f-name" maxlength="50" value="${esc(g?.name)}" placeholder="Ex.: Estudar violão">
+  <label for="f-emo">Emoji</label><input type="text" id="f-emo" maxlength="4" value="${esc(g?.emoji||'🎯')}">
+  <label for="f-desc">Descrição (opcional)</label><textarea id="f-desc" rows="2" maxlength="120">${esc(g?.desc)}</textarea>
+  <label>Cor</label><div class="swatches" id="sws" data-color="${c}">${COLORS.map(x=>`<button type="button" class="sw ${x===c?'sel':''}" style="background:${x}" data-act="color" data-c="${x}" aria-label="${x}"></button>`).join('')}</div>
+  <div class="acts">${n?'':`<button class="del" data-act="delGoal" data-id="${g.id}">Apagar</button>`}<button class="cancel" data-act="close">Cancelar</button><button class="save" data-act="saveGoal" data-id="${g?.id||''}">Salvar</button></div>`;
+  dlg.showModal();
+}
+function rewForm(r){
+  const n=!r,d=r?.days||7;
+  dlg.innerHTML=`<h2 style="margin:0">${n?'Nova recompensa':'Editar recompensa'}</h2>
+  <label for="f-name">O que você ganha</label><input type="text" id="f-name" maxlength="60" value="${esc(r?.name)}" placeholder="Ex.: Jantar no restaurante X">
+  <label for="f-emo">Emoji</label><input type="text" id="f-emo" maxlength="4" value="${esc(r?.emoji||'🎁')}">
+  <label for="f-days">Dias perfeitos seguidos</label><input type="number" id="f-days" min="1" max="3650" value="${d}">
+  <div class="pre"><button type="button" data-act="preset" data-d="7">Semana</button><button type="button" data-act="preset" data-d="30">Mês</button><button type="button" data-act="preset" data-d="365">Ano</button></div>
+  <label>Objetivos (todos precisam estar em dia)</label>
+  ${S.goals.length?S.goals.map(g=>`<label class="chk"><input type="checkbox" name="gl" value="${g.id}" ${r?.goalIds.includes(g.id)?'checked':''}>${esc(g.emoji)} ${esc(g.name)}</label>`).join(''):'<div class="desc">Crie um objetivo primeiro.</div>'}
+  <div class="acts">${n?'':`<button class="del" data-act="delRew" data-id="${r.id}">Apagar</button>`}<button class="cancel" data-act="close">Cancelar</button><button class="save" data-act="saveRew" data-id="${r?.id||''}">Salvar</button></div>`;
+  dlg.showModal();
+}
+
+/* ---------- ações ---------- */
+const A={
+  tab:e=>{tab=e.dataset.v;render()},
+  tog:e=>{const g=goal(e.dataset.id),k=e.dataset.k;if(has(g,k))delete g.days[k];else g.days[k]=1;save();render()},
+  newGoal:()=>goalForm(),
+  editGoal:e=>goalForm(goal(e.dataset.id)),
+  color:e=>{const w=document.getElementById('sws');w.dataset.color=e.dataset.c;w.querySelectorAll('.sw').forEach(b=>b.classList.toggle('sel',b===e))},
+  saveGoal:e=>{
+    const name=val('f-name').trim();if(!name){document.getElementById('f-name').focus();return}
+    const data={name,emoji:val('f-emo').trim()||'🎯',desc:val('f-desc').trim(),color:document.getElementById('sws').dataset.color};
+    if(e.dataset.id)Object.assign(goal(e.dataset.id),data);else S.goals.push({id:uid(),days:{},created:key(back(0)),...data});
+    save();dlg.close();render();
+  },
+  delGoal:e=>{const g=goal(e.dataset.id);if(!confirm(`Apagar "${g.name}" e todo o histórico?`))return;
+    S.goals=S.goals.filter(x=>x.id!==g.id);S.rewards.forEach(r=>r.goalIds=r.goalIds.filter(i=>i!==g.id));save();dlg.close();render()},
+  newRew:()=>rewForm(),
+  editRew:e=>rewForm(S.rewards.find(r=>r.id===e.dataset.id)),
+  preset:e=>{document.getElementById('f-days').value=e.dataset.d},
+  saveRew:e=>{
+    const name=val('f-name').trim();if(!name){document.getElementById('f-name').focus();return}
+    const days=Math.max(1,Math.min(3650,parseInt(val('f-days'))||7));
+    const goalIds=[...dlg.querySelectorAll('input[name=gl]:checked')].map(i=>i.value);
+    const data={name,emoji:val('f-emo').trim()||'🎁',days,goalIds};
+    if(e.dataset.id)Object.assign(S.rewards.find(r=>r.id===e.dataset.id),data);else S.rewards.push({id:uid(),claims:[],...data});
+    save();dlg.close();render();
+  },
+  delRew:e=>{const r=S.rewards.find(x=>x.id===e.dataset.id);if(!confirm(`Apagar a recompensa "${r.name}"?`))return;
+    S.rewards=S.rewards.filter(x=>x.id!==r.id);save();dlg.close();render()},
+  claim:e=>{const r=S.rewards.find(x=>x.id===e.dataset.id);if(run(r)<r.days)return;
+    r.claims.push(key(back(0)));save();render();alert(`Aproveita: ${r.name} ${r.emoji}\nA contagem dessa recompensa recomeça amanhã.`)},
+  close:()=>dlg.close(),
+  export:()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='strk-backup-'+key(back(0))+'.json';a.click();URL.revokeObjectURL(a.href)},
+  import:()=>document.getElementById('file').click()
+};
+const val=id=>document.getElementById(id).value;
+document.addEventListener('click',ev=>{const e=ev.target.closest('[data-act]');if(e&&A[e.dataset.act])A[e.dataset.act](e)});
+document.getElementById('file').addEventListener('change',async ev=>{
+  const f=ev.target.files[0];if(!f)return;
+  try{const d=JSON.parse(await f.text());if(!Array.isArray(d.goals)||!Array.isArray(d.rewards))throw 0;
+    if(confirm('Isso substitui os dados atuais. Continuar?')){S=d;save();render()}}
+  catch(e){alert('Arquivo inválido.')}
+  ev.target.value='';
+});
+dlg.addEventListener('click',ev=>{if(ev.target===dlg)dlg.close()});
+render();
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
